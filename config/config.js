@@ -7,6 +7,7 @@ export const CONFIG = {
 
     "game": {
         "spaceWidthRatio": 0.6,
-        "spaceHeightRatio": 0.1
+        "spaceHeightRatio": 0.08,
+        "spaceHeightMarginRatio": 0.90,
     }
 }

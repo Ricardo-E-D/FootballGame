@@ -1,24 +1,26 @@
 import Phaser from 'phaser'
-import { CST } from '../CST'
+import {CST} from '../CST'
 import {CONFIG} from '../../config/config.js'
 
 export default class Game extends Phaser.Scene {
     constructor() {
         super({
-            key : CST.SCENES.GAME
+            key: CST.SCENES.GAME
         });
     }
 
-    init(data){
+    init(data) {
 
     }
 
     preload() {
+
     }
 
     create() {
         this.createBackgroundImage()
         this.createSpaceButton()
+        this.createSpaceOnKeyboardListener()
     }
 
     createBackgroundImage() {
@@ -30,8 +32,20 @@ export default class Game extends Phaser.Scene {
     }
 
     createSpaceButton() {
-        let buttonWidth = CONFIG.application.width * CONFIG.game.spaceHeightRatio
+        let buttonWidth = CONFIG.application.width * CONFIG.game.spaceWidthRatio
         let buttonHeight = CONFIG.application.height * CONFIG.game.spaceHeightRatio;
-        let button = this.add.rectangle(100,100,buttonWidth, buttonHeight, 0xffffff)
+        let buttonX = CONFIG.application.width / 2 ;
+
+        let rectangle = this.add.rectangle(buttonX, CONFIG.application.height * CONFIG.game.spaceHeightMarginRatio, buttonWidth, buttonHeight, 0xff0000);
+        rectangle.setInteractive();
+        rectangle.on("pointerdown", ()=> {this.spacePressed()});
+    }
+
+    spacePressed() {
+        console.log("Pressed")
+    }
+
+    createSpaceOnKeyboardListener() {
+      this.input.keyboard.on('keydown-SPACE', ()=> {this.spacePressed()})
     }
 }
