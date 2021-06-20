@@ -5,9 +5,14 @@ export const CONFIG = {
             "height": 750
         },
 
-    "game": {
+    "space": {
         "spaceWidthRatio": 0.6,
         "spaceHeightRatio": 0.08,
         "spaceHeightMarginRatio": 0.90,
-    }
+    },
+
+    "ball":
+        {
+            "ballSize": 100
+        }
 }

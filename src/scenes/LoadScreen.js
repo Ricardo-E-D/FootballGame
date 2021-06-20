@@ -1,6 +1,6 @@
 import {CST} from "../CST"
 
-export class LoadScene extends Phaser.Scene {
+export class LoadScreen extends Phaser.Scene {
     constructor() {
         super({
             key: CST.SCENES.LOAD
@@ -16,6 +16,8 @@ export class LoadScene extends Phaser.Scene {
         this.load.image("menuBG", "./assets/MainMenuBackground.jpg");
         this.load.image("gameBG", "./assets/GameBackground.jpg");
         this.load.image("playButton", "./assets/play_button.png");
+        this.load.image("backButton", "./assets/BackButton.png");
+        this.load.image("ball", "./assets/ball.jpg")
 
         let loadingBar = this.add.graphics({
             fillStyle: {
@@ -32,6 +34,4 @@ export class LoadScene extends Phaser.Scene {
     {
         this.scene.start(CST.SCENES.MAIN)
     }
-
-
 }
