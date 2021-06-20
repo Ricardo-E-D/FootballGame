@@ -7,15 +7,17 @@ var time = 10;
 var timerText;
 var timerTextStyle = {font: "35px Arial", fill: "#fff", align: "center"}
 
-var ballSpeed = 750;
 var ballInterval;
 var ball = null;
+var ballIntervalTime = 60000 / 80;
 
 var redDot;
 var generateRedDot = true;
 var redDotInterval;
 var redDotGeneratedTime;
 var waitingForSpaceAfterRedDotGenerated = false;
+
+var playerResponseInterval;
 
 
 export default class Game extends Phaser.Scene {
@@ -31,7 +33,7 @@ export default class Game extends Phaser.Scene {
         this.createSpaceOnKeyboardListener()
         this.createBackButton();
         this.createTimer();
-        this.createBallInterval(ballSpeed);
+        this.createBallInterval(ballIntervalTime);
         this.createRedDotInterval();
     }
 
@@ -61,15 +63,18 @@ export default class Game extends Phaser.Scene {
     }
 
     spacePressed() {
+
         //Valid entry of space pressed
         if (waitingForSpaceAfterRedDotGenerated) {
-            console.log(this.time.now - redDotGeneratedTime)
+            console.log("Reaction Time: " + this.time.now - redDotGeneratedTime)
             waitingForSpaceAfterRedDotGenerated = false;
+
+            this.increaseBallIntervalSpeed()
         }
         //Space pressed without dot generated
         else
         {
-            console.log("Game over")
+          this.decreaseBallIntervalSpeed()
         }
     }
 
@@ -109,7 +114,7 @@ export default class Game extends Phaser.Scene {
         return Math.random() * (max - min) + min;
     }
 
-    createBallInterval(ballSpeed) {
+    createBallInterval( ) {
         ballInterval = setInterval(() => {
             this.deleteRedDotIfExists()
             if (ball != null) {
@@ -126,7 +131,7 @@ export default class Game extends Phaser.Scene {
                 this.generateRedDot()
                 generateRedDot = false;
             }
-        }, ballSpeed);
+        }, ballIntervalTime);
     }
 
     generateRedDot()
@@ -136,6 +141,7 @@ export default class Game extends Phaser.Scene {
         redDot = this.add.circle(dotX, dotY, 10, 0xff0000)
         redDotGeneratedTime = this.time.now
         waitingForSpaceAfterRedDotGenerated = true;
+        playerResponseInterval = setInterval(() => this.decreaseBallIntervalSpeed(), 1000)
     }
 
     deleteRedDotIfExists()
@@ -152,5 +158,21 @@ export default class Game extends Phaser.Scene {
         redDotInterval = setInterval(()=>{
             generateRedDot = true;
         }, timeToGenerate)
+    }
+
+    //TODO set increase interval
+    increaseBallIntervalSpeed() {
+        clearInterval(ballInterval);
+        ballIntervalTime -= 180
+        this.createBallInterval()
+    }
+
+    //TODO set descrease interval
+    decreaseBallIntervalSpeed() {
+        clearInterval(playerResponseInterval)
+
+        clearInterval(ballInterval);
+        ballIntervalTime += 170
+        this.createBallInterval()
     }
 }
