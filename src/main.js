@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 
 import MainScreen from './scenes/MainScreen'
 import Game from './scenes/Game'
-import { CST } from './CST'
 import {LoadScreen} from "./scenes/LoadScreen";
 import {CONFIG} from "../config/config";
 

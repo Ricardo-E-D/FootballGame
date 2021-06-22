@@ -3,6 +3,5 @@ export const CST = {
         LOAD: "LOAD",
         MAIN: "MAIN",
         GAME: "GAME"
-
     }
 }

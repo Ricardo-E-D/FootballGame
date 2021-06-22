@@ -1,8 +1,9 @@
 export const CONFIG = {
     "application":
         {
-            "width": 1500,
-            "height": 750
+            "width": 1000,
+            "height": 500,
+            "timeLength": 10
         },
 
     "space": {
@@ -14,5 +15,11 @@ export const CONFIG = {
     "ball":
         {
             "ballSize": 100
+        },
+    "dot":
+        {
+            "initialSize": 10,
+            "lowerSizeEachLevelBy": 1,
         }
+
 }

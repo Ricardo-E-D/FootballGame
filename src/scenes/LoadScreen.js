@@ -14,10 +14,12 @@ export class LoadScreen extends Phaser.Scene {
     preload()
     {
         this.load.image("menuBG", "./assets/MainMenuBackground.jpg");
-        this.load.image("gameBG", "./assets/GameBackground.jpg");
+        this.load.image("gameBG", "./assets/TrainYourEyesAssets/Just goal.png");
         this.load.image("playButton", "./assets/play_button.png");
-        this.load.image("backButton", "./assets/BackButton.png");
-        this.load.image("ball", "./assets/ball.jpg")
+        this.load.image("backButton", "./assets/TrainYourEyesAssets/Exit.png");
+        this.load.image("ball", "./assets/TrainYourEyesAssets/BallAktiv 3.png")
+        this.load.image("restartButton", "./assets/TrainYourEyesAssets/Restart.png")
+        this.load.image("thumbUp", "./assets/TrainYourEyesAssets/ThumbUp.png" )
 
         let loadingBar = this.add.graphics({
             fillStyle: {
