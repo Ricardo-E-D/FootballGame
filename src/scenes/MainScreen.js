@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {CST} from '../CST'
+import {CST} from '../CST.js'
 
 export default class MainScreen extends Phaser.Scene {
     constructor() {
@@ -9,6 +9,14 @@ export default class MainScreen extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image("menuBG", "./assets/MainMenuBackground.jpg");
+        this.load.image("playButton", "./assets/play_button.png");
+
+        this.load.image("gameBG", "./assets/TrainYourEyesAssets/Just goal.png");
+        this.load.image("backButton", "./assets/TrainYourEyesAssets/Exit.png");
+        this.load.image("ball", "./assets/TrainYourEyesAssets/BallAktiv 3.png");
+        this.load.image("restartButton", "./assets/TrainYourEyesAssets/Restart.png");
+        this.load.image("thumbUp", "./assets/TrainYourEyesAssets/ThumbUp.png" );
 
     }
 
@@ -20,10 +28,6 @@ export default class MainScreen extends Phaser.Scene {
 
     createBackgroundImage() {
         let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'menuBG')
-        let scaleX = this.cameras.main.width / image.width
-        let scaleY = this.cameras.main.height / image.height
-        let scale = Math.max(scaleX, scaleY)
-        image.setScale(scale).setScrollFactor(0)
     }
 
     createPlayButton() {
