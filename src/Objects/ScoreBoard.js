@@ -13,16 +13,19 @@ class ScoreBoard
         this.scoreBoard = this.scene.add.text(this.scene.game.canvas.width * 0.5, 5, "");
         let scoreBoardStyle = {font: "35px Arial", fill: "#fff", align: "center"};
         this.scoreBoard.setStyle(scoreBoardStyle);
+        this.update();
     }
 
     increaseScore()
     {
         this.score += CONFIG.score.increase
+        this.update();
     }
 
     decreaseScore()
     {
         this.score -= CONFIG.score.decrease
+        this.update();
     }
 
     getScore()

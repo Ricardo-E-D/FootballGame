@@ -6,7 +6,7 @@ export const CONFIG = {
         {
             "width": applicationWidth,
             "height": applicationHeight,
-            "timeLength": 70
+            "timeLength": 10
         },
 
     "space": {
@@ -29,6 +29,10 @@ export const CONFIG = {
     "slowDownButton": {
         "slowDownBy": 100
     },
+    "optionButtonsPosition": {
+        "buttonsY": 0.85,
+        "firstButtonX": 0.3
+    },
     "difficulty": {
         //A
         "0": {
@@ -44,7 +48,9 @@ export const CONFIG = {
             "dotSize": 10,
 
             "lowerIntervalLimit": 599,
-            "upperIntervalLimit": 1200
+            "upperIntervalLimit": 1200,
+
+            "numberOfSymbols": 1
         },
 
         //B
@@ -60,7 +66,9 @@ export const CONFIG = {
 
             "dotSize": 9,
             "lowerIntervalLimit": 501,
-            "upperIntervalLimit": 600
+            "upperIntervalLimit": 600,
+
+            "numberOfSymbols": 1
         },
 
         //C
@@ -76,7 +84,9 @@ export const CONFIG = {
 
             "dotSize": 8,
             "lowerIntervalLimit": 429,
-            "upperIntervalLimit": 500
+            "upperIntervalLimit": 500,
+
+            "numberOfSymbols": 2
         },
 
         //D
@@ -92,7 +102,9 @@ export const CONFIG = {
 
             "dotSize": 7,
             "lowerIntervalLimit": 376,
-            "upperIntervalLimit": 428
+            "upperIntervalLimit": 428,
+
+            "numberOfSymbols": 2
         },
 
         //E
@@ -108,7 +120,9 @@ export const CONFIG = {
 
             "dotSize": 6,
             "lowerIntervalLimit": 334,
-            "upperIntervalLimit": 375
+            "upperIntervalLimit": 375,
+
+            "numberOfSymbols": 3
         },
 
         //F
@@ -124,7 +138,9 @@ export const CONFIG = {
 
             "dotSize": 5,
             "lowerIntervalLimit": 301,
-            "upperIntervalLimit": 333
+            "upperIntervalLimit": 333,
+
+            "numberOfSymbols": 3
         },
 
         //G
@@ -140,7 +156,9 @@ export const CONFIG = {
 
             "dotSize": 5,
             "lowerIntervalLimit": 273,
-            "upperIntervalLimit": 300
+            "upperIntervalLimit": 300,
+
+            "numberOfSymbols": 4
         },
 
         //H
@@ -156,7 +174,9 @@ export const CONFIG = {
 
             "dotSize": 5,
             "lowerIntervalLimit": 0,
-            "upperIntervalLimit": 372
+            "upperIntervalLimit": 372,
+
+            "numberOfSymbols": 4
         }
     }
 }

@@ -26,7 +26,7 @@ class DifficultyManager {
             return;
         }
 
-        //True when the ball interval time is smaller then the current difficulty boundary. Used for checking difficultys
+        //True when the ball interval time is smaller then the current difficulty boundary. Used for checking difficulties
         if (difficulty.upperIntervalLimit < ballIntervalTime && this.currentDifficulty !== 0) {
             this.currentDifficulty--;
         } else if (difficulty.lowerIntervalLimit > ballIntervalTime && this.currentDifficulty < this.difficulties.length - 1) {
@@ -43,6 +43,9 @@ class DifficultyManager {
         this.currentDifficulty = 0
     }
 
+    increaseDifficulty() {
+        this.currentDifficulty += 1;
+    }
 }
 
 export default DifficultyManager

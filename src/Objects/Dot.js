@@ -4,18 +4,10 @@ class Dot
 {
     constructor(scene) {
         this.scene = scene;
-        this.generateRedDot = false;
+        this.toGenerateRedDot = false;
         this.dot = null
         this.lastGeneratedTime = null;
         this.waitingForSpaceAfterRedDotGenerated = false;
-    }
-
-    deleteRedDotIfExists()
-    {
-        if (this.dot != null) {
-            this.dot.destroy();
-            this.dot = null;
-        }
     }
 
     createRedDot(ballX, ballY, currentLevel) {
@@ -26,7 +18,15 @@ class Dot
             this.dot = this.scene.add.circle(dotX, dotY, currentLevel.dotSize, 0xff0000)
             this.lastGeneratedTime = this.scene.time.now
             this.waitingForSpaceAfterRedDotGenerated = true;
-            this.generateRedDot = false;
+            this.toGenerateRedDot = false;
+    }
+
+    deleteRedDotIfExists()
+    {
+        if (this.dot != null) {
+            this.dot.destroy();
+            this.dot = null;
+        }
     }
 
 }
