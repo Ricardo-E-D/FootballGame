@@ -1,46 +1,48 @@
 import {CONFIG} from "../../config/config.js";
 
-class ScoreBoard
+var scene;
+var scoreBoardText;
+var score;
+
+export default class ScoreBoard
 {
-    constructor(scene) {
-    this.scene = scene;
-    this.scoreBoard = null;
-    this.score = 0;
+    constructor(gameScene) {
+        scene = gameScene;
+        scoreBoardText = null;
+        score = 0;
     }
 
     create()
     {
-        this.scoreBoard = this.scene.add.text(this.scene.game.canvas.width * 0.5, 5, "");
+        scoreBoardText = scene.add.text(scene.game.canvas.width * 0.5, 5, "");
         let scoreBoardStyle = {font: "35px Arial", fill: "#fff", align: "center"};
-        this.scoreBoard.setStyle(scoreBoardStyle);
+        scoreBoardText.setStyle(scoreBoardStyle);
         this.update();
     }
 
     increaseScore()
     {
-        this.score += CONFIG.score.increase
+        score += CONFIG.score.increase
         this.update();
     }
 
     decreaseScore()
     {
-        this.score -= CONFIG.score.decrease
+        score -= CONFIG.score.decrease
         this.update();
     }
 
     getScore()
     {
-        return this.score
+        return score
     }
 
     update() {
-        this.scoreBoard.setText("Score: " + this.score)
+        scoreBoardText.setText("Score: " + score)
     }
 
     reset()
     {
-        this.score = 0;
+        score = 0;
     }
 }
-
-export default ScoreBoard

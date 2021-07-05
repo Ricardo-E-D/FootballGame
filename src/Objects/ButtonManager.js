@@ -12,7 +12,6 @@ export default class ButtonManager {
         this.createBackButton();
         this.createRestartButton();
         this.createSlowDownButton();
-        // this.createSpaceButton();
     }
 
     createBackButton() {
@@ -49,13 +48,13 @@ export default class ButtonManager {
 
     displayOptionButtons(options, callback) {
         let buttonsY = this.scene.game.canvas.height * CONFIG.optionButtonsPosition.buttonsY
-        let gap = ((1 - (2 * CONFIG.optionButtonsPosition.firstButtonX)) / 4) * this.scene.game.canvas.width
+        let gap = ((1 - (2 * CONFIG.optionButtonsPosition.firstButtonX)) / 3) * this.scene.game.canvas.width
 
         let style = {font: "35px Arial", fill: "#fff", align: "center"};
 
 
         for (let i = 0; i < 4; i++) {
-            optionButtons[i] = this.scene.add.text(this.scene.game.canvas.width * CONFIG.optionButtonsPosition.firstButtonX + (gap * i), buttonsY, options[i], style)
+            optionButtons[i] = this.scene.add.text(this.scene.game.canvas.width * CONFIG.optionButtonsPosition.firstButtonX + (gap * i), buttonsY, options[i].replaceAll(',',''), style)
             optionButtons[i].setInteractive()
             optionButtons[i].on("pointerdown", () => callback(i))
         }
@@ -66,5 +65,20 @@ export default class ButtonManager {
         for (let i = 0; i < optionButtons.length; i++) {
             optionButtons[i].destroy();
         }
+    }
+
+    createSpaceButton(callBackWhenPressed)
+    {
+        let windowWidth = this.scene.game.canvas.width;
+        let windowHeight = this.scene.game.canvas.height;
+        let buttonWidth = windowWidth * CONFIG.space.spaceWidthRatio;
+        let buttonHeight = windowHeight * CONFIG.space.spaceHeightRatio;
+        let buttonX = windowWidth / 2;
+
+        let rectangle = this.scene.add.rectangle(buttonX, windowHeight * CONFIG.space.spaceHeightMarginRatio, buttonWidth, buttonHeight, 0xff0000);
+        rectangle.setInteractive();
+        rectangle.on("pointerdown", () => {
+            callBackWhenPressed();
+        });
     }
 }

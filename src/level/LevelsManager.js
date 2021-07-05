@@ -10,7 +10,7 @@ export default class LevelManager
         this.levels[0] = new Level1(this.scene, this);
         this.levels[1] = new Level2(this.scene, this);
 
-        this.currentLevel = 1;
+        this.currentLevel = 0;
     }
 
     create()

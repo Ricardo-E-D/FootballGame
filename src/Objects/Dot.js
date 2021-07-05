@@ -1,13 +1,19 @@
 import {CONFIG} from "../../config/config.js";
 
-class Dot
+var scene;
+var toGenerateRedDot;
+var dot;
+var lastGeneratedTime;
+var waitingForSpaceAfterRedDotGenerated;
+
+export default class Dot
 {
-    constructor(scene) {
-        this.scene = scene;
-        this.toGenerateRedDot = false;
-        this.dot = null
-        this.lastGeneratedTime = null;
-        this.waitingForSpaceAfterRedDotGenerated = false;
+    constructor(gameScene) {
+        scene = gameScene;
+        toGenerateRedDot = false;
+        dot = null
+        lastGeneratedTime = null;
+        waitingForSpaceAfterRedDotGenerated = false;
     }
 
     createRedDot(ballX, ballY, currentLevel) {
@@ -15,20 +21,43 @@ class Dot
 
             let dotX = ballX + (CONFIG.ball.ballSize / 2)
             let dotY = ballY + (CONFIG.ball.ballSize / 2)
-            this.dot = this.scene.add.circle(dotX, dotY, currentLevel.dotSize, 0xff0000)
-            this.lastGeneratedTime = this.scene.time.now
-            this.waitingForSpaceAfterRedDotGenerated = true;
-            this.toGenerateRedDot = false;
+            dot = scene.add.circle(dotX, dotY, currentLevel.dotSize, 0xff0000)
+            lastGeneratedTime = scene.time.now
+            waitingForSpaceAfterRedDotGenerated = true;
+            toGenerateRedDot = false;
     }
 
     deleteRedDotIfExists()
     {
-        if (this.dot != null) {
-            this.dot.destroy();
-            this.dot = null;
+        if (dot != null) {
+            dot.destroy();
+            dot = null;
         }
     }
 
-}
+    isWaitingForSpaceAfterRedDotGenerated()
+    {
+        return waitingForSpaceAfterRedDotGenerated;
+    }
 
-export default Dot
+    setWaitingForSpaceAfterRedDotGenerated(bool)
+    {
+        waitingForSpaceAfterRedDotGenerated = bool;
+    }
+
+   getLastGeneratedTime()
+    {
+        return lastGeneratedTime;
+    }
+
+    isToGenerateRedDot()
+    {
+        return toGenerateRedDot;
+    }
+
+    toGenerateRedDot(bool)
+    {
+        toGenerateRedDot = bool
+    }
+
+}

@@ -5,14 +5,8 @@ import DifficultyManager from "../Objects/DifficulityManager";
 import Ball from "../Objects/Ball";
 import Timer from "../Objects/Timer";
 import ButtonManager from "../Objects/ButtonManager";
+import IntervalManager from "../Objects/IntervalManager";
 
-var redDotInterval;
-
-var timerInterval;
-
-var ballInterval;
-var ballIntervalTime = CONFIG.ball.defaultSpeed;
-var playerResponseInterval;
 
 export default class Level1 {
     constructor(scene, levelManager) {
@@ -23,15 +17,23 @@ export default class Level1 {
         this.difficultyManager = new DifficultyManager(scene);
         this.ball = new Ball(scene);
         this.timer = new Timer(scene, this);
+        this.buttonManager = new ButtonManager(scene);
+        this.intervalManager = new IntervalManager();
     }
 
     create() {
+        this.intervalManager.setPlayerResponseCallback(() => this.incorrectSpacePressed());
+
+        this.intervalManager.setBallCallback(() => this.createBall())
+        this.intervalManager.createBallInterval();
+
+        this.intervalManager.setSymbolCallback(() => this.dot.toGenerateRedDot(true))
+        this.intervalManager.createSymbolInterval();
+
         this.createSpaceOnKeyboardListener();
-        this.createBallInterval();
-        this.createRedDotInterval();
         this.timer.create();
         this.scoreBoard.create()
-        this.createSpaceButton()
+        this.buttonManager.createSpaceButton(() => this.spacePressed())
     }
 
     update() {
@@ -47,115 +49,63 @@ export default class Level1 {
 
     spacePressed() {
         //Valid entry of space pressed
-        if (this.dot.waitingForSpaceAfterRedDotGenerated) {
-            console.log(this.scene.time.now - this.dot.lastGeneratedTime);
-            this.dot.waitingForSpaceAfterRedDotGenerated = false;
+        if (this.dot.isWaitingForSpaceAfterRedDotGenerated()) {
+            console.log(this.scene.time.now - this.dot.getLastGeneratedTime());
+            this.dot.setWaitingForSpaceAfterRedDotGenerated(false);
 
-            this.increaseBallIntervalSpeed();
+            this.correctSpacePressed();
         }
         //Space pressed without dot generated
         else {
-            this.decreaseBallIntervalSpeed();
+            this.incorrectSpacePressed();
         }
+        this.difficultyManager.checkForDifficulty(this.intervalManager.getBallIntervalTime());
+        this.intervalManager.clearPlayerResponseTimeout();
+        this.intervalManager.createBallInterval();
     }
 
-    increaseBallIntervalSpeed() {
+    correctSpacePressed() {
         this.scoreBoard.increaseScore();
-        if (ballIntervalTime < 250) {
-            ballIntervalTime = 250;
-        }
-
-        this.difficultyManager.checkForDifficulty(ballIntervalTime);
-        clearInterval(playerResponseInterval);
-
-        ballIntervalTime -= CONFIG.ball.speedDecreaseInMilliseconds;
-        this.createBallInterval()
+        this.intervalManager.increaseBallIntervalSpeed();
     }
 
-    decreaseBallIntervalSpeed() {
-        this.scoreBoard.decreaseScore()
-        this.difficultyManager.checkForDifficulty(ballIntervalTime)
-        clearInterval(playerResponseInterval)
-
-        if (ballIntervalTime < 1250)
-            ballIntervalTime += CONFIG.ball.speedIncreaseInMilliseconds
-        this.createBallInterval()
+    incorrectSpacePressed() {
+        this.scoreBoard.decreaseScore();
+        this.intervalManager.decreaseBallIntervalSpeed()
     }
 
-    createBallInterval() {
-        clearInterval(ballInterval);
-        ballInterval = setInterval(() => this.createBall(), ballIntervalTime);
-    }
 
     createBall() {
-
         this.ball.createBall(this.difficultyManager.getCurrentDifficulty())
-        if (this.dot.toGenerateRedDot) {
+
+        if (this.dot.isToGenerateRedDot()) {
             this.dot.createRedDot(this.ball.getX(), this.ball.getY(), this.difficultyManager.getCurrentDifficulty())
-            playerResponseInterval = setInterval(() => this.decreaseBallIntervalSpeed(), 1000)
+            this.intervalManager.createPlayerResponseTimeout()
         } else {
             this.dot.deleteRedDotIfExists()
         }
-        console.log("Ball speed: + " + ballIntervalTime)
-    }
-
-    createRedDotInterval() {
-        let timeToGenerate = this.randomNumber(3000, 6000);
-        redDotInterval = setInterval(() => {
-            this.dot.toGenerateRedDot = true;
-        }, timeToGenerate);
-    }
-
-    randomNumber(min, max) {
-        return Math.random() * (max - min) + min;
+        console.log("Ball speed: + " + this.intervalManager.getBallIntervalTime())
     }
 
     //Message at the end of the level
     timeOver() {
-        let windowWidth = this.scene.game.width;
-        let windowHeight = this.scene.game.height;
-
-
-        let endMessageStyle = {font: "35px Arial", fill: "#fff", align: "center"};
-        this.scene.add.text(windowWidth / 2 - 100, windowHeight / 2, "Great job \nYour score is " + this.scoreBoard.score, endMessageStyle)
-        let image = this.scene.add.image(windowWidth * 0.47, windowHeight * 0.6, "thumbUp");
-        image.setOrigin(0)
-        image.setScale(0.1)
-
-        this.resetValues()
-        this.resetIntervals()
+        this.timer.displayLevelEndMessage(this.scoreBoard.getScore());
+        this.resetValues();
+        this.resetIntervals();
     }
 
     resetValues() {
         this.scoreBoard.reset();
         this.timer.reset();
-        ballIntervalTime = CONFIG.ball.defaultSpeed;
+        this.intervalManager.resetBallIntervalSpeed();
         this.difficultyManager.reset();
     }
 
     resetIntervals() {
-        clearInterval(ballInterval);
-        clearInterval(playerResponseInterval);
-        clearInterval(redDotInterval);
-        clearInterval(timerInterval);
+        this.intervalManager.reset();
     }
 
     slowDownButtonPressed() {
-        ballIntervalTime += CONFIG.slowDownButton.slowDownBy
-        this.createBallInterval();
-    }
-
-    createSpaceButton() {
-        let windowWidth = this.scene.game.canvas.width;
-        let windowHeight = this.scene.game.canvas.height;
-        let buttonWidth = windowWidth * CONFIG.space.spaceWidthRatio;
-        let buttonHeight = windowHeight * CONFIG.space.spaceHeightRatio;
-        let buttonX = windowWidth / 2;
-
-        let rectangle = this.scene.add.rectangle(buttonX, windowHeight * CONFIG.space.spaceHeightMarginRatio, buttonWidth, buttonHeight, 0xff0000);
-        rectangle.setInteractive();
-        rectangle.on("pointerdown", () => {
-            this.spacePressed();
-        });
+        this.intervalManager.slowDownButtonPressed();
     }
 }

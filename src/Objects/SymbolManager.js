@@ -14,7 +14,7 @@ var readSymbol;
 
 var options;
 
-const symbols = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
+const symbols = ['⏰', '☔', '☕', '✋', '♟', '✈', '⛅', '⛪', '🍦', '💧', '📅', '📏', '🔑', '🔥', '🕶', '😃'];
 
 export default class SymbolManager {
 
@@ -69,7 +69,8 @@ export default class SymbolManager {
 
         let style = {font: "35px Arial", fill: "#fff", align: "center"}
         symbol = this.scene.add.text(symbolX, symbolY, generatedSymbols[readSymbol], style)
-        readSymbol++
+        symbol.setOrigin(0.5, 0.5);
+        readSymbol++;
         toGenerateSymbol = false;
     }
 

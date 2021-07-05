@@ -1,11 +1,8 @@
-var applicationWidth = 1000;
-var applicationHeight = 500;
+
 let config = this;
 export const CONFIG = {
     "application":
         {
-            "width": applicationWidth,
-            "height": applicationHeight,
             "timeLength": 10
         },
 
@@ -13,6 +10,7 @@ export const CONFIG = {
         "spaceWidthRatio": 0.6,
         "spaceHeightRatio": 0.08,
         "spaceHeightMarginRatio": 0.90,
+        "playerResponseTime": 1000
     },
 
     "ball":
@@ -31,7 +29,7 @@ export const CONFIG = {
     },
     "optionButtonsPosition": {
         "buttonsY": 0.85,
-        "firstButtonX": 0.3
+        "firstButtonX": 0.2
     },
     "difficulty": {
         //A

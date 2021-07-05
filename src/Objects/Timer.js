@@ -1,6 +1,6 @@
 import {CONFIG} from "../../config/config.js";
 
-class Timer
+export default class Timer
 {
     constructor(scene, level) {
         this.level = level;
@@ -17,7 +17,6 @@ class Timer
         this.timerText.setStyle(timerTextStyle);
 
         this.interval = setInterval(this.sec.bind(this), 1000);
-
     }
 
     update()
@@ -39,6 +38,16 @@ class Timer
             this.level.timeOver();
         }
     }
-}
 
-export default Timer
+    displayLevelEndMessage(score)
+    {
+        let windowWidth = this.scene.game.canvas.width;
+        let windowHeight = this.scene.game.canvas.height;
+
+        let endMessageStyle = {font: "35px Arial", fill: "#fff", align: "center"};
+        this.scene.add.text(windowWidth / 2 - 100, windowHeight / 2, "Great job \nYour score is " + score, endMessageStyle)
+        let image = this.scene.add.image(windowWidth * 0.47, windowHeight * 0.6, "thumbUp");
+        image.setOrigin(0);
+        image.setScale(0.1);
+    }
+}
