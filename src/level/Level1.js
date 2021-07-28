@@ -1,39 +1,45 @@
 import Dot from "../Objects/Dot";
-import {CONFIG} from "../../config/config";
 import ScoreBoard from "../Objects/ScoreBoard";
 import DifficultyManager from "../Objects/DifficulityManager";
 import Ball from "../Objects/Ball";
 import Timer from "../Objects/Timer";
 import ButtonManager from "../Objects/ButtonManager";
 import IntervalManager from "../Objects/IntervalManager";
+import {CST} from "../CST";
+import EndLevelMessage from "../Objects/EndLevelMessage";
+import BackgroundImage from "../Objects/BackgroundImage";
 
 
-export default class Level1 {
-    constructor(scene, levelManager) {
-        this.levelManager = levelManager;
-        this.scene = scene;
-        this.dot = new Dot(scene);
-        this.scoreBoard = new ScoreBoard(scene);
-        this.difficultyManager = new DifficultyManager(scene);
-        this.ball = new Ball(scene);
-        this.timer = new Timer(scene, this);
-        this.buttonManager = new ButtonManager(scene);
+export default class Level1 extends Phaser.Scene{
+    constructor() {
+        super(CST.SCENES.LEVEL_ONE);
+        this.createObjects();
+    }
+
+    createObjects()
+    {
+        this.dot = new Dot(this);
+        this.scoreBoard = new ScoreBoard(this);
+        this.difficultyManager = new DifficultyManager(this);
+        this.ball = new Ball(this);
+        this.timer = new Timer(this);
+        this.buttonManager = new ButtonManager(this);
         this.intervalManager = new IntervalManager();
     }
 
-    create() {
-        this.intervalManager.setPlayerResponseCallback(() => this.incorrectSpacePressed());
 
+    create() {
+        BackgroundImage(this);
+        this.intervalManager.setPlayerResponseCallback(() => this.incorrectSpacePressed());
         this.intervalManager.setBallCallback(() => this.createBall())
         this.intervalManager.createBallInterval();
-
         this.intervalManager.setSymbolCallback(() => this.dot.toGenerateRedDot(true))
         this.intervalManager.createSymbolInterval();
-
         this.createSpaceOnKeyboardListener();
-        this.timer.create();
         this.scoreBoard.create()
-        this.buttonManager.createSpaceButton(() => this.spacePressed())
+        this.buttonManager.create()
+        this.timer.create(()=>this.timeOver());
+        document.getElementById("slowDownButton").onclick = this.slowDownButtonPressed.bind(this);
     }
 
     update() {
@@ -42,7 +48,7 @@ export default class Level1 {
     }
 
     createSpaceOnKeyboardListener() {
-        this.scene.input.keyboard.on('keydown-SPACE', () => {
+        this.input.keyboard.on('keydown-SPACE', () => {
             this.spacePressed();
         })
     }
@@ -50,7 +56,7 @@ export default class Level1 {
     spacePressed() {
         //Valid entry of space pressed
         if (this.dot.isWaitingForSpaceAfterRedDotGenerated()) {
-            console.log(this.scene.time.now - this.dot.getLastGeneratedTime());
+            console.log(this.time.now - this.dot.getLastGeneratedTime());
             this.dot.setWaitingForSpaceAfterRedDotGenerated(false);
 
             this.correctSpacePressed();
@@ -87,25 +93,31 @@ export default class Level1 {
         console.log("Ball speed: + " + this.intervalManager.getBallIntervalTime())
     }
 
-    //Message at the end of the level
     timeOver() {
-        this.timer.displayLevelEndMessage(this.scoreBoard.getScore());
-        this.resetValues();
-        this.resetIntervals();
+        EndLevelMessage(this, 1, ()=>this.levelUp());
+        this.intervalManager.reset();
     }
 
-    resetValues() {
+
+    reset() {
+        this.intervalManager.reset();
+        this.registry.destroy();
+        this.events.off();
+        this.input.keyboard.off('keydown-SPACE');
+
         this.scoreBoard.reset();
         this.timer.reset();
         this.intervalManager.resetBallIntervalSpeed();
         this.difficultyManager.reset();
     }
 
-    resetIntervals() {
-        this.intervalManager.reset();
-    }
-
     slowDownButtonPressed() {
         this.intervalManager.slowDownButtonPressed();
+    }
+
+    levelUp()
+    {
+        this.reset();
+        this.scene.start(CST.SCENES.LEVEL_TWO)
     }
 }

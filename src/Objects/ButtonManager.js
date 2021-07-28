@@ -2,6 +2,10 @@ import {CONFIG} from "../../config/config.js";
 
 var optionButtons;
 
+var spaceButton;
+
+var slowDownButton;
+
 export default class ButtonManager {
     constructor(scene) {
         this.scene = scene;
@@ -9,9 +13,9 @@ export default class ButtonManager {
     }
 
     create() {
-        this.createBackButton();
-        this.createRestartButton();
-        this.createSlowDownButton();
+        // this.createBackButton();
+        // this.createRestartButton();
+        // this.createSlowDownButton();
     }
 
     createBackButton() {
@@ -39,7 +43,7 @@ export default class ButtonManager {
     }
 
     createSlowDownButton() {
-        let slowDownButton = this.scene.add.rectangle(this.scene.game.canvas.width * 0.90, 100, this.scene.game.canvas.width * 0.1, 30, 0xff0000)
+        slowDownButton = this.scene.add.rectangle(this.scene.game.canvas.width * 0.90, 100, this.scene.game.canvas.width * 0.1, 30, 0xff0000)
         slowDownButton.setInteractive()
         slowDownButton.on("pointerdown", () => {
             this.scene.slowDownButtonPressed();
@@ -75,10 +79,27 @@ export default class ButtonManager {
         let buttonHeight = windowHeight * CONFIG.space.spaceHeightRatio;
         let buttonX = windowWidth / 2;
 
-        let rectangle = this.scene.add.rectangle(buttonX, windowHeight * CONFIG.space.spaceHeightMarginRatio, buttonWidth, buttonHeight, 0xff0000);
-        rectangle.setInteractive();
-        rectangle.on("pointerdown", () => {
+        spaceButton = this.scene.add.rectangle(buttonX, windowHeight * CONFIG.space.spaceHeightMarginRatio, buttonWidth, buttonHeight, 0xff0000);
+        spaceButton.setInteractive();
+        spaceButton.on("pointerdown", () => {
             callBackWhenPressed();
+        });
+    }
+
+    removeSpaceButtonListener()
+    {
+        spaceButton.off('pointerdown');
+    }
+
+    disableSlowDownButton()
+    {
+     slowDownButton.off("pointerdown");
+    }
+
+    enableSlowDownButton()
+    {
+        slowDownButton.on("pointerdown", () => {
+            this.scene.slowDownButtonPressed();
         });
     }
 }

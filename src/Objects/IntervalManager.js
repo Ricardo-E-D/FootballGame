@@ -35,7 +35,9 @@ export default class IntervalManager {
     reset() {
         clearInterval(ballInterval);
         clearInterval(symbolInterval);
-        clearTimeout(playerResponseTimeout)
+        clearTimeout(playerResponseTimeout);
+        ballIntervalTime = CONFIG.ball.defaultSpeed;
+        playerResponseTime = CONFIG.space.playerResponseTime;
     }
 
     clearPlayerResponseTimeout()

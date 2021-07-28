@@ -29,7 +29,7 @@ export const CONFIG = {
     },
     "optionButtonsPosition": {
         "buttonsY": 0.85,
-        "firstButtonX": 0.2
+        "firstButtonX": 0.3
     },
     "difficulty": {
         //A

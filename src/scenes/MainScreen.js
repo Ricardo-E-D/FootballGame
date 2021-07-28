@@ -27,7 +27,7 @@ export default class MainScreen extends Phaser.Scene {
 
 
     createBackgroundImage() {
-        let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'menuBG')
+        this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'menuBG')
     }
 
     createPlayButton() {
@@ -40,7 +40,7 @@ export default class MainScreen extends Phaser.Scene {
             playButton.setTint(0xffffff)
         });
         playButton.on("pointerdown", () => {
-            this.scene.start(CST.SCENES.GAME)
+            this.scene.start(CST.SCENES.LEVEL_ONE)
         })
     }
 }

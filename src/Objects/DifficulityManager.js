@@ -1,7 +1,7 @@
 import {CONFIG} from "../../config/config.js";
 
 
-class DifficultyManager {
+export default class DifficultyManager {
     constructor(scene) {
         this.scene = scene;
 
@@ -47,5 +47,3 @@ class DifficultyManager {
         this.currentDifficulty += 1;
     }
 }
-
-export default DifficultyManager

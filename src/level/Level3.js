@@ -1,22 +1,22 @@
 import SymbolLevel from "./SymbolLevel";
 import {CST} from "../CST";
 
-export default class Level2 extends SymbolLevel
+export default class Level3 extends SymbolLevel
 {
     constructor() {
-        super(CST.SCENES.LEVEL_TWO)
+        super(CST.SCENES.LEVEL_THREE)
     }
 
     init()
     {
         this.createObjects();
         this.create();
-        super.setSymbolType(2);
+        super.setSymbolType(3);
     }
 
     levelUp()
     {
         this.reset();
-        this.scene.start(CST.SCENES.LEVEL_THREE);
+        this.scene.start(CST.SCENES.LEVEL_FOUR);
     }
 }
