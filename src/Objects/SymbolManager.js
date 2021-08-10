@@ -94,7 +94,7 @@ export default class SymbolManager {
         let symbolX = ballX + (CONFIG.ball.ballSize / 2);
         let symbolY = ballY + (CONFIG.ball.ballSize / 2);
 
-        let style = {font: "35px Arial", fill: "#fff", align: "center"}
+        let style = {font: "30px Arial", fill: "#fff", align: "center"}
         symbol = this.scene.add.text(symbolX, symbolY, generatedSymbols[readSymbol], style)
         symbol.setOrigin(0.5, 0.5);
         readSymbol++;

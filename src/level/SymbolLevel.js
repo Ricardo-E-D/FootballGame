@@ -40,7 +40,6 @@ export default class SymbolLevel extends Phaser.Scene {
     create() {
         this.levelPassedManager.create();
         BackgroundImage(this);
-        this.buttonManager.create();
         this.scoreBoard.create()
         this.symbolManager.setLevelFinishedCallback(() => this.roundFinished())
 

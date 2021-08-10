@@ -3,7 +3,6 @@ import ScoreBoard from "../Objects/ScoreBoard";
 import DifficultyManager from "../Objects/DifficulityManager";
 import Ball from "../Objects/Ball";
 import Timer from "../Objects/Timer";
-import ButtonManager from "../Objects/ButtonManager";
 import IntervalManager from "../Objects/IntervalManager";
 import {CST} from "../CST";
 import EndLevelMessage from "../Messages/EndLevelMessage";
@@ -15,6 +14,7 @@ import DisplayFixTheBallMessage from "../Messages/DisplayFixTheBallMessage";
 
 var eye;
 var startOfTheRound;
+var keyboardListener;
 
 export default class Level1 extends Phaser.Scene {
     constructor() {
@@ -29,7 +29,6 @@ export default class Level1 extends Phaser.Scene {
         this.difficultyManager = new DifficultyManager(this);
         this.ball = new Ball(this);
         this.timer = new Timer(this, eye);
-        this.buttonManager = new ButtonManager(this);
         this.intervalManager = new IntervalManager(() => this.createBall(), () => this.dot.toGenerateRedDot(true), () => this.incorrectSpacePressed());
         this.levelPassedManager = new LevelPassedManager();
     }
@@ -41,11 +40,20 @@ export default class Level1 extends Phaser.Scene {
         this.intervalManager.createSymbolInterval();
         this.createSpaceOnKeyboardListener();
         this.scoreBoard.create()
-        this.buttonManager.create()
         this.timer.create(() => this.timeOver(), eye);
         this.levelPassedManager.create();
-        document.getElementById("slowDownButton").onclick = this.slowDownButtonPressed.bind(this);
         startOfTheRound = true;
+
+        let spaceButton = document.getElementById("spaceButton");
+        spaceButton.removeEventListener("click", keyboardListener);
+        spaceButton.style.visibility = "visible";
+        this.addKeyboardButtonListener();
+        document.getElementById("slowDownButton").onclick = this.slowDownButtonPressed.bind(this);
+    }
+
+    addKeyboardButtonListener() {
+        keyboardListener = this.spacePressed.bind(this);
+        document.getElementById("spaceButton").addEventListener("click", keyboardListener);
     }
 
     update() {
@@ -59,6 +67,7 @@ export default class Level1 extends Phaser.Scene {
     }
 
     spacePressed() {
+        console.log("spacePressed")
         //Valid entry of space pressed
         if (this.dot.isWaitingForSpaceAfterRedDotGenerated()) {
             let reactionTime = this.time.now - this.dot.getLastGeneratedTime();
@@ -74,7 +83,6 @@ export default class Level1 extends Phaser.Scene {
         }
         this.difficultyManager.checkForDifficulty(this.intervalManager.getBallIntervalTime());
         this.intervalManager.clearPlayerResponseTimeout();
-        this.intervalManager.createBallInterval(() => this.createBall());
     }
 
     correctSpacePressed() {
@@ -97,12 +105,14 @@ export default class Level1 extends Phaser.Scene {
     }
 
     pauseGame() {
+        document.getElementById("spaceButton").removeEventListener("click", keyboardListener);
         this.input.keyboard.off('keydown-SPACE');
         this.timer.pause();
         this.intervalManager.pauseIntervals();
     }
 
     continueGame() {
+        this.addKeyboardButtonListener();
         this.createSpaceOnKeyboardListener();
         this.timer.continue();
         this.intervalManager.continueIntervals();
@@ -124,10 +134,12 @@ export default class Level1 extends Phaser.Scene {
     timeOver() {
         if (eye === CST.EYE.LEFT) {
             if (this.levelPassedManager.isLevelPassed()) {
+                this.pauseGame();
                 EndLevelMessage(this, 1, () => this.levelUp());
                 eye = CST.EYE.RIGHT;
             } else {
                 eye = CST.EYE.RIGHT;
+                this.pauseGame();
                 LevelNotPassedMessage(this, () => this.restartLevel())
             }
         } else {
@@ -153,6 +165,7 @@ export default class Level1 extends Phaser.Scene {
     }
 
     levelUp() {
+        document.getElementById("spaceButton").style.visibility = "hidden";
         this.reset();
         this.scene.start(CST.SCENES.LEVEL_TWO)
     }
