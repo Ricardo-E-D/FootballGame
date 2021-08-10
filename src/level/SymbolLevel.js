@@ -4,15 +4,25 @@ import DifficultyManager from "../Objects/DifficulityManager";
 import Ball from "../Objects/Ball";
 import ButtonManager from "../Objects/ButtonManager";
 import IntervalManager from "../Objects/IntervalManager";
-import EndLevelMessage from "../Objects/EndLevelMessage";
+import EndLevelMessage from "../Messages/EndLevelMessage";
 import BackgroundImage from "../Objects/BackgroundImage";
+import Timer from "../Objects/Timer";
+import {CST} from "../CST";
+import ChangeEyeMessage from "../Messages/ChangeEyeMessage";
+import LevelPassedManager from "../Objects/LevelPassedManager";
+import LevelNotPassedMessage from "../Messages/LevelNotPassedMessage";
 
 var levelNo;
+var eye;
+
+var symbolTimeout;
+
 
 export default class SymbolLevel extends Phaser.Scene {
     constructor(config) {
         super(config);
         this.createObjects();
+        eye = CST.EYE.RIGHT
     }
 
     createObjects() {
@@ -21,27 +31,27 @@ export default class SymbolLevel extends Phaser.Scene {
         this.difficultyManager = new DifficultyManager(this)
         this.ball = new Ball(this);
         this.buttonManager = new ButtonManager(this);
-        this.intervalManager = new IntervalManager();
+        this.intervalManager = new IntervalManager(() => this.createBall(), () => this.symbolManager.setToGenerateSymbol(true), null);
         this.buttonManager = new ButtonManager(this);
+        this.timer = new Timer(this);
+        this.levelPassedManager = new LevelPassedManager();
     }
 
     create() {
+        this.levelPassedManager.create();
         BackgroundImage(this);
         this.buttonManager.create();
-        this.intervalManager.setBallCallback(() => this.createBall());
-        this.intervalManager.setSymbolCallback(() => this.symbolManager.setToGenerateSymbol(true));
-
         this.scoreBoard.create()
+        this.symbolManager.setLevelFinishedCallback(() => this.roundFinished())
 
-        this.symbolManager.setLevelFinishedCallback(() => this.displayFinalMessage())
         this.symbolManager.generateSymbols(this.difficultyManager.getCurrentDifficulty())
         this.intervalManager.createBallInterval();
+        this.timer.create(() => this.roundFinished(), eye);
         this.intervalManager.createSymbolInterval();
         document.getElementById("slowDownButton").onclick = this.slowDownButtonPressed.bind(this);
     }
 
     update() {
-
     }
 
     createBall() {
@@ -51,7 +61,7 @@ export default class SymbolLevel extends Phaser.Scene {
 
             //Sets up timer after last symbol in the sequence that is displayed. After this timeout, the options are displayed
             if (this.symbolManager.noMoreSymbolsLeft()) {
-                setTimeout(() => this.displaySymbolOptions(), 2500)
+                symbolTimeout = setTimeout(() => this.displaySymbolOptions(), 2500);
             }
         } else {
             this.symbolManager.removeSymbol()
@@ -62,6 +72,7 @@ export default class SymbolLevel extends Phaser.Scene {
     displaySymbolOptions() {
         let options = this.symbolManager.getOptions(this.difficultyManager.getCurrentDifficulty())
 
+        this.timer.pause();
         this.buttonManager.displayOptionButtons(options, (selectedIndex) => this.checkForValidAnswer(selectedIndex));
         this.intervalManager.reset();
     }
@@ -70,7 +81,9 @@ export default class SymbolLevel extends Phaser.Scene {
         let correctAnswer = this.symbolManager.getIndexOfCorrectAnswer()
         if (selectedIndex === correctAnswer) {
             this.scoreBoard.increaseScore();
+            this.levelPassedManager.addEntry(true);
         } else {
+            this.levelPassedManager.addEntry(false);
             this.scoreBoard.decreaseScore();
         }
         this.intervalManager.setBallIntervalTime(this.difficultyManager.getCurrentDifficulty().lowerIntervalLimit);
@@ -81,15 +94,18 @@ export default class SymbolLevel extends Phaser.Scene {
     }
 
     continueGame() {
+        this.timer.continue();
         this.symbolManager.generateSymbols(this.difficultyManager.getCurrentDifficulty());
         this.intervalManager.createBallInterval();
         this.intervalManager.createSymbolInterval();
     }
 
     reset() {
+        this.levelPassedManager.reset();
         this.intervalManager.reset();
         this.registry.destroy();
         this.events.off();
+        this.difficultyManager.reset();
     }
 
     setSymbolType(level) {
@@ -97,12 +113,31 @@ export default class SymbolLevel extends Phaser.Scene {
         this.symbolManager.setLevel(level);
     }
 
-    displayFinalMessage() {
-        EndLevelMessage(this, levelNo, () => this.levelUp());
+    roundFinished() {
         this.intervalManager.reset();
+        clearTimeout(symbolTimeout);
+        if (eye === CST.EYE.LEFT) {
+            if (this.levelPassedManager.isLevelPassed()) {
+                EndLevelMessage(this, levelNo, () => this.levelUp());
+                eye = CST.EYE.RIGHT;
+            } else {
+                eye = CST.EYE.RIGHT;
+                LevelNotPassedMessage(this, () => this.restartLevel())
+            }
+        } else {
+            eye = CST.EYE.LEFT;
+            ChangeEyeMessage(this, () => this.restartLevel())
+        }
+        this.reset();
     }
 
     slowDownButtonPressed() {
         this.intervalManager.slowDownButtonPressed()
+    }
+
+    restartLevel() {
+        eye = CST.EYE.LEFT;
+        this.reset();
+        this.create();
     }
 }

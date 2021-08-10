@@ -4,14 +4,15 @@ import {CST} from "../CST";
 export default class Level4 extends SymbolLevel
 {
     constructor() {
-        super(CST.SCENES.LEVEL_FOUR)
+        super(CST.SCENES.LEVEL_FOUR);
     }
 
     init()
     {
+        window.localStorage.setItem("SavedLevel", "4");
         this.createObjects();
-        super.setSymbolType(4);
         this.create();
+        super.setSymbolType(4);
     }
 
 

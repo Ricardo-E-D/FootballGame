@@ -2,18 +2,23 @@ import {CONFIG} from "../../config/config";
 
 var ballInterval;
 var ballIntervalTime;
-var ballCB;
 
 var symbolInterval;
-var symbolCB;
 
 var playerResponseTimeout;
-var playerResponseCB;
 var playerResponseTime;
+
+var ballCB;
+var symbolCB;
+var playerResponseCB;
+
 export default class IntervalManager {
-    constructor() {
+    constructor(ballC, symbolC, playerResponseC) {
         ballIntervalTime = CONFIG.ball.defaultSpeed;
         playerResponseTime = CONFIG.space.playerResponseTime;
+        ballCB = ballC;
+        symbolCB = symbolC;
+        playerResponseCB = playerResponseC;
     }
 
     createBallInterval() {
@@ -58,19 +63,6 @@ export default class IntervalManager {
         ballIntervalTime = time;
     }
 
-    setBallCallback(callback) {
-        ballCB = callback;
-    }
-
-    setPlayerResponseCallback(callback)
-    {
-        playerResponseCB = callback;
-    }
-
-    setSymbolCallback(callback) {
-        symbolCB = callback;
-    }
-
     getBallIntervalTime() {
         return ballIntervalTime;
     }
@@ -85,7 +77,19 @@ export default class IntervalManager {
     }
 
     decreaseBallIntervalSpeed() {
-        if (ballIntervalTime < 1250)
+        if (ballIntervalTime < 1600)
             ballIntervalTime += CONFIG.ball.speedIncreaseInMilliseconds
+    }
+
+    pauseIntervals()
+    {
+        clearInterval(ballInterval);
+        clearInterval(symbolInterval);
+    }
+
+    continueIntervals()
+    {
+       this.createBallInterval();
+       this.createSymbolInterval();
     }
 }

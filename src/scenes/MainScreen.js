@@ -16,11 +16,13 @@ export default class MainScreen extends Phaser.Scene {
         this.load.image("backButton", "./assets/TrainYourEyesAssets/Exit.png");
         this.load.image("ball", "./assets/TrainYourEyesAssets/BallAktiv 3.png");
         this.load.image("restartButton", "./assets/TrainYourEyesAssets/Restart.png");
-        this.load.image("thumbUp", "./assets/TrainYourEyesAssets/ThumbUp.png" );
+        this.load.image("thumbUp", "./assets/TrainYourEyesAssets/ThumbUp.png");
 
     }
 
     create() {
+        window.localStorage.setItem(CST.EYE.RIGHT.toString(), 20);
+        window.localStorage.setItem(CST.EYE.LEFT.toString(), 20);
         this.createBackgroundImage();
         this.createPlayButton();
     }
@@ -40,7 +42,27 @@ export default class MainScreen extends Phaser.Scene {
             playButton.setTint(0xffffff)
         });
         playButton.on("pointerdown", () => {
-            this.scene.start(CST.SCENES.LEVEL_ONE)
-        })
+            let lastPlayedLevel = window.localStorage.getItem("SavedLevel");
+            let sceneToOpen;
+            switch (lastPlayedLevel) {
+                case null:
+                    sceneToOpen = CST.SCENES.LEVEL_ONE;
+                    break;
+                case "2":
+                    sceneToOpen = CST.SCENES.LEVEL_TWO;
+                    break;
+                case "3":
+                    sceneToOpen = CST.SCENES.LEVEL_THREE;
+                    break;
+                case "4":
+                    sceneToOpen = CST.SCENES.LEVEL_FOUR;
+                    break;
+                case "5":
+                    sceneToOpen = CST.SCENES.LEVEL_FIVE;
+                    break;
+            }
+            //TODO this.scene.start(sceneToOpen);
+            this.scene.start(CST.SCENES.LEVEL_ONE);
+        });
     }
 }

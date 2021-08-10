@@ -1,6 +1,6 @@
 import {CONFIG} from "../../config/config.js";
 
-class Ball {
+export default class Ball {
     constructor(scene) {
         this.scene = scene;
         this.ball = null;
@@ -23,7 +23,7 @@ class Ball {
         }
 
         this.ball = this.scene.add.image(ballX, ballY, "ball")
-        this.ball.setOrigin(0)
+        this.ball.setOrigin(0);
         this.ball.setScale(CONFIG.ball.ballSize / this.ball.height)
     }
 
@@ -39,4 +39,3 @@ class Ball {
         return this.ball.y
     }
 }
-export default Ball;

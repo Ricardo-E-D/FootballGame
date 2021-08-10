@@ -3,10 +3,10 @@ export default function EndLevelMessage(scene, level, callback) {
     let windowHeight = scene.game.canvas.height;
 
     let endMessageStyle = {font: "35px Arial", fill: "#fff", align: "center"};
-    let image = scene.add.image(windowWidth * 0.47, windowHeight * 0.6, "thumbUp");
-    image.setInteractive();
-    image.setOrigin(0);
+    let image = scene.add.image(windowWidth * 0.5, windowHeight * 0.6, "thumbUp");
+    image.setOrigin(0.5,0);
     image.setScale(0.1);
+    image.setInteractive();
 
     let time = 5;
     let text = null;
@@ -16,10 +16,10 @@ export default function EndLevelMessage(scene, level, callback) {
             callback();
         if (text !== null)
             text.destroy();
-        text = scene.add.text(windowWidth / 2 - 300, windowHeight / 2, "Congratulation - you have passed level " + level + ",\n next level starts in " + time + " seconds", endMessageStyle);
+        text = scene.add.text(windowWidth / 2, windowHeight / 2, "Congratulation - you have passed level " + level + ",\n next level starts in " + time + " seconds", endMessageStyle);
+        text.setOrigin(0.5);
         time--;
     }
     textFunction();
     setInterval(() => textFunction(), 1000);
-
 }

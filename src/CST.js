@@ -8,5 +8,9 @@ export const CST = {
         LEVEL_THREE: "LEVEL_THREE",
         LEVEL_FOUR: "LEVEL_FOUR",
         LEVEL_FIVE: "LEVEL_FIVE"
+    },
+    EYE: {
+        RIGHT: "RIGHT",
+        LEFT: "LEFT"
     }
 }

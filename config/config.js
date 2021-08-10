@@ -1,5 +1,4 @@
 
-let config = this;
 export const CONFIG = {
     "application":
         {
@@ -22,7 +21,8 @@ export const CONFIG = {
         },
     "score": {
         "increase": 10,
-        "decrease": 5
+        "decrease": 5,
+        "percentToPassTheLevel": 0.9
     },
     "slowDownButton": {
         "slowDownBy": 100

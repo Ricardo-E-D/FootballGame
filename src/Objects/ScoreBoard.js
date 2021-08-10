@@ -15,6 +15,7 @@ export default class ScoreBoard
     {
         this.reset();
         scoreBoardText = this.scene.add.text(this.scene.game.canvas.width * 0.5, 5, "");
+        scoreBoardText.setOrigin(0.5, 0);
         let scoreBoardStyle = {font: "35px Arial", fill: "white", align: "center"};
         scoreBoardText.setStyle(scoreBoardStyle);
         this.update();
