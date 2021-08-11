@@ -10,7 +10,7 @@ import Level5 from "./level/Level5";
 const config = {
     width: window.innerWidth,
     height: window.innerHeight,
-    type: Phaser.CANVAS,
+    type: Phaser.AUTO,
     scene: [MainScreen, Level5, Level4, Level3, Level2, Level1],
     scale: {mode: Phaser.Scale.FIT}
 }

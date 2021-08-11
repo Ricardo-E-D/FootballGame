@@ -22,7 +22,7 @@ export default class SymbolLevel extends Phaser.Scene {
     constructor(config) {
         super(config);
         this.createObjects();
-        eye = CST.EYE.RIGHT
+        eye = CST.EYE.RIGHT;
     }
 
     createObjects() {
@@ -77,7 +77,7 @@ export default class SymbolLevel extends Phaser.Scene {
     }
 
     checkForValidAnswer(selectedIndex) {
-        let correctAnswer = this.symbolManager.getIndexOfCorrectAnswer()
+        let correctAnswer = this.buttonManager.getCorrectOptionIndex();
         if (selectedIndex === correctAnswer) {
             this.scoreBoard.increaseScore();
             this.levelPassedManager.addEntry(true);

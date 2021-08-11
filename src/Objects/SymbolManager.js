@@ -53,7 +53,7 @@ export default class SymbolManager {
         let symbols;
 
         if (currentLevel === 2) {
-            symbols = "⌛⛔⚡⚓☔⛽☕";
+            symbols = "☺☽♘♡♫⚅⚐✂☃✈✔✏✰❆➔☏☘☞";
             console.log(symbols)
         }
         else if (currentLevel === 3)
@@ -94,7 +94,7 @@ export default class SymbolManager {
         let symbolX = ballX + (CONFIG.ball.ballSize / 2);
         let symbolY = ballY + (CONFIG.ball.ballSize / 2);
 
-        let style = {font: "30px Arial", fill: "#fff", align: "center"}
+        let style = {font: "35px Arial", fill: "#fff", align: "center"}
         symbol = this.scene.add.text(symbolX, symbolY, generatedSymbols[readSymbol], style)
         symbol.setOrigin(0.5, 0.5);
         readSymbol++;
@@ -126,26 +126,11 @@ export default class SymbolManager {
             //Check for redundant symbols in a set
         while (new Set(options).size !== options.length)
 
-        //Shuffling the options so the order is not the same
-        options = this.shuffle(options)
         return options;
     }
 
     getIndexOfCorrectAnswer() {
         return options.indexOf(generatedSymbols.toString())
-    }
-
-    shuffle(array) {
-        let currentIndex = array.length, randomIndex;
-
-        while (0 !== currentIndex) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-
-            [array[currentIndex], array[randomIndex]] = [
-                array[randomIndex], array[currentIndex]];
-        }
-        return array;
     }
 
     resetValues() {
