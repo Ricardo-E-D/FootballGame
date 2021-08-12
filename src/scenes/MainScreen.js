@@ -21,8 +21,8 @@ export default class MainScreen extends Phaser.Scene {
     }
 
     create() {
-        window.localStorage.setItem(CST.EYE.RIGHT.toString(), 65);
-        window.localStorage.setItem(CST.EYE.LEFT.toString(), 60);
+        window.localStorage.setItem(CST.EYE.RIGHT.toString(), 10);
+        window.localStorage.setItem(CST.EYE.LEFT.toString(), 10);
         this.createBackgroundImage();
         this.createPlayButton();
     }

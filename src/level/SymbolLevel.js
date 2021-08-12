@@ -8,9 +8,9 @@ import EndLevelMessage from "../Messages/EndLevelMessage";
 import BackgroundImage from "../Objects/BackgroundImage";
 import Timer from "../Objects/Timer";
 import {CST} from "../CST";
-import ChangeEyeMessage from "../Messages/ChangeEyeMessage";
 import LevelPassedManager from "../Objects/LevelPassedManager";
-import LevelNotPassedMessage from "../Messages/LevelNotPassedMessage";
+import Message from "../Messages/Message";
+import {CONFIG} from "../../config/config";
 
 var levelNo;
 var eye;
@@ -82,8 +82,8 @@ export default class SymbolLevel extends Phaser.Scene {
             this.scoreBoard.increaseScore();
             this.levelPassedManager.addEntry(true);
         } else {
-            this.levelPassedManager.addEntry(false);
             this.scoreBoard.decreaseScore();
+            this.levelPassedManager.addEntry(false);
         }
         this.intervalManager.setBallIntervalTime(this.difficultyManager.getCurrentDifficulty().lowerIntervalLimit);
         this.buttonManager.destroyOptionButtons();
@@ -117,15 +117,19 @@ export default class SymbolLevel extends Phaser.Scene {
         clearTimeout(symbolTimeout);
         if (eye === CST.EYE.LEFT) {
             if (this.levelPassedManager.isLevelPassed()) {
-                EndLevelMessage(this, levelNo, () => this.levelUp());
-                eye = CST.EYE.RIGHT;
+                if (levelNo !== 5) {
+                    EndLevelMessage(this, levelNo, () => this.levelUp());
+                    eye = CST.EYE.RIGHT;
+                }
+                else
+                    this.gameFinished();
             } else {
                 eye = CST.EYE.RIGHT;
-                LevelNotPassedMessage(this, () => this.restartLevel())
+                Message(this, () => this.restartLevel(), CONFIG.messages.levelNotPassed)
             }
         } else {
             eye = CST.EYE.LEFT;
-            ChangeEyeMessage(this, () => this.restartLevel())
+            Message(this, () => this.restartLevel(), CONFIG.messages.changeEye);
         }
         this.reset();
     }
@@ -135,7 +139,6 @@ export default class SymbolLevel extends Phaser.Scene {
     }
 
     restartLevel() {
-        eye = CST.EYE.LEFT;
         this.reset();
         this.create();
     }

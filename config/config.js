@@ -1,4 +1,3 @@
-
 export const CONFIG = {
     "application":
         {
@@ -30,6 +29,26 @@ export const CONFIG = {
     "optionButtonsPosition": {
         "buttonsY": 0.85,
         "firstButtonX": 0.3
+    },
+    "messages": {
+        "levelNotPassed": {
+            "text": "Level failed. Try again",
+            "button": "Confirm",
+        },
+        "changeEye": {
+            "text": "Change Eye",
+            "button": "Confirm"
+        },
+        "gameFinished": {
+            "text": "Congratulation, you have successfully finished the game!",
+            "button": "Exit",
+        },
+        "fixTheBall":
+            {
+                "text" : "Remember to fixate the ball!",
+                "countdownFirstPart": "Continuing in ",
+                "countdownSecondPart": " seconds"
+            }
     },
     "difficulty": {
         //A

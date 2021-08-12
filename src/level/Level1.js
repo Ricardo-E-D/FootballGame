@@ -7,10 +7,10 @@ import IntervalManager from "../Objects/IntervalManager";
 import {CST} from "../CST";
 import EndLevelMessage from "../Messages/EndLevelMessage";
 import BackgroundImage from "../Objects/BackgroundImage";
-import ChangeEyeMessage from "../Messages/ChangeEyeMessage";
 import LevelPassedManager from "../Objects/LevelPassedManager";
-import LevelNotPassedMessage from "../Messages/LevelNotPassedMessage";
 import DisplayFixTheBallMessage from "../Messages/DisplayFixTheBallMessage";
+import Message from "../Messages/Message";
+import {CONFIG} from "../../config/config";
 
 var eye;
 var startOfTheRound;
@@ -67,7 +67,6 @@ export default class Level1 extends Phaser.Scene {
     }
 
     spacePressed() {
-        console.log("spacePressed")
         //Valid entry of space pressed
         if (this.dot.isWaitingForSpaceAfterRedDotGenerated()) {
             let reactionTime = this.time.now - this.dot.getLastGeneratedTime();
@@ -140,12 +139,13 @@ export default class Level1 extends Phaser.Scene {
             } else {
                 eye = CST.EYE.RIGHT;
                 this.pauseGame();
-                LevelNotPassedMessage(this, () => this.restartLevel())
+                Message(this, () => this.restartLevel(), CONFIG.messages.levelNotPassed)
             }
         } else {
             eye = CST.EYE.LEFT;
-            ChangeEyeMessage(this, () => this.restartLevel())
-        }
+            this.pauseGame();
+            Message(this,  () => this.restartLevel(),CONFIG.messages.changeEye);
+            }
         this.reset();
     }
 
@@ -167,7 +167,7 @@ export default class Level1 extends Phaser.Scene {
     levelUp() {
         document.getElementById("spaceButton").style.visibility = "hidden";
         this.reset();
-        this.scene.start(CST.SCENES.LEVEL_TWO)
+        this.scene.start(CST.SCENES.LEVEL_TWO);
     }
 
     restartLevel() {

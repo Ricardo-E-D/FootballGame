@@ -1,5 +1,7 @@
 import SymbolLevel from "./SymbolLevel";
 import {CST} from "../CST";
+import Message from "../Messages/Message";
+import {CONFIG} from "../../config/config";
 
 export default class Level5 extends SymbolLevel
 {
@@ -15,9 +17,18 @@ export default class Level5 extends SymbolLevel
         super.setSymbolType(5);
     }
 
-    levelUp()
+    gameFinished()
     {
         this.reset();
+        Message(this, ()=>this.closeWindow(), CONFIG.messages.gameFinished)
+    }
+
+    closeWindow()
+    {
+        let new_window =
+            open(location, '_self');
+        // Close this window
+        new_window.close();
     }
 
 }
