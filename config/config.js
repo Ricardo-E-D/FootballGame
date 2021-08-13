@@ -48,7 +48,12 @@ export const CONFIG = {
                 "text" : "Remember to fixate the ball!",
                 "countdownFirstPart": "Continuing in ",
                 "countdownSecondPart": " seconds"
-            }
+            },
+        "endLevel": {
+            "firstPart" : "Congratulation - you have passed level ",
+            "secondPart": ",\n next level starts in ",
+            "thirdPard": " seconds"
+        }
     },
     "difficulty": {
         //A

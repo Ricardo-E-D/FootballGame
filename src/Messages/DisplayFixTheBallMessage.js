@@ -10,7 +10,7 @@ export default function DisplayFixTheBallMessage(scene, callback) {
     let time = 3;
     let text = null;
     let interval;
-    text = scene.add.text(windowMidX, windowMidY + 30, CONFIG.messages.fixTheBall.countdownFirstPart + time + CONFIG.messages.fixTheBall.countdownSecondPart, messageStyle);
+    text = scene.add.text(windowMidX, windowMidY + 35, CONFIG.messages.fixTheBall.countdownFirstPart + time + CONFIG.messages.fixTheBall.countdownSecondPart, messageStyle);
     text.setOrigin(0.5);
     let textFunction = function () {
         if (time === 0) {

@@ -120,8 +120,7 @@ export default class SymbolLevel extends Phaser.Scene {
                 if (levelNo !== 5) {
                     EndLevelMessage(this, levelNo, () => this.levelUp());
                     eye = CST.EYE.RIGHT;
-                }
-                else
+                } else
                     this.gameFinished();
             } else {
                 eye = CST.EYE.RIGHT;
