@@ -54,11 +54,10 @@ export default class SymbolManager {
 
         if (currentLevel === 2) {
             symbols = "☺☽♘♡♫⚅⚐✂☃✈✔✏✰❆➔☏☘☞";
-            console.log(symbols)
         }
         else if (currentLevel === 3)
         {
-            symbols = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            symbols = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         }
         else if (currentLevel === 4)
         {
@@ -66,14 +65,12 @@ export default class SymbolManager {
         }
         else if (currentLevel === 5)
         {
-            symbols = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+            symbols = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         }
 
         for (let i = 0; i < noOfSymbols; i++) {
             answer[i] = symbols.charAt(Math.floor(Math.random() * symbols.length));
         }
-
-        console.log(answer)
         return answer.toString()
     }
 

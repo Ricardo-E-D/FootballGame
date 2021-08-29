@@ -14,7 +14,6 @@ import {CONFIG} from "../../config/config";
 
 var levelNo;
 var eye;
-
 var symbolTimeout;
 
 

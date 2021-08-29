@@ -27,7 +27,6 @@ export default class MainScreen extends Phaser.Scene {
         this.createPlayButton();
     }
 
-
     createBackgroundImage() {
         this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'menuBG')
     }

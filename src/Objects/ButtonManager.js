@@ -28,7 +28,6 @@ export default class ButtonManager {
             if (shuffledOptions[i] === correctOption) {
                 tintColor = 0x00ff00;
                 correctOptionIndex = i;
-                console.log(i);
             } else {
                 tintColor = 0xff0000;
             }

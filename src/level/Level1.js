@@ -40,7 +40,6 @@ export default class Level1 extends Phaser.Scene {
         document.getElementById("slowDownButton").onclick = this.slowDownButtonPressed.bind(this);
     }
 
-
     update() {
     }
 

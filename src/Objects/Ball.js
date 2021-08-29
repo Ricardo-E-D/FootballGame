@@ -21,7 +21,6 @@ export default class Ball {
             ballX = this.randomNumber(this.scene.game.canvas.width * difficulty.leftSpanXMin, this.scene.game.canvas.width * difficulty.leftSpanXMax);
             this.isBallLeft = true;
         }
-
         this.ball = this.scene.add.image(ballX, ballY, "ball")
         this.ball.setOrigin(0);
         this.ball.setScale(CONFIG.ball.ballSize / this.ball.height)
