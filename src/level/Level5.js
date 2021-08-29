@@ -20,7 +20,7 @@ export default class Level5 extends SymbolLevel
     gameFinished()
     {
         this.reset();
-        Message(this, ()=>this.closeWindow(), CONFIG.messages.gameFinished)
+        Message(this, () => this.closeWindow(), CONFIG.messages.gameFinished)
     }
 
     closeWindow()

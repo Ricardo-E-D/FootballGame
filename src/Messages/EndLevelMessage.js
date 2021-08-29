@@ -18,7 +18,7 @@ export default function EndLevelMessage(scene, level, callback) {
             callback();
         if (text !== null)
             text.destroy();
-        text = scene.add.text(windowWidth / 2, windowHeight / 2, CONFIG.messages.endLevel.firstPart + level + CONFIG.messages.endLevel.secondPart + time + CONFIG.messages.endLevel.thirdPard, endMessageStyle);
+        text = scene.add.text(windowWidth / 2, windowHeight / 2, CONFIG.messages.endLevel.firstPart + level + CONFIG.messages.endLevel.secondPart + time + CONFIG.messages.endLevel.thirdPart, endMessageStyle);
         text.setOrigin(0.5);
         time--;
     }

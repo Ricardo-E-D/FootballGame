@@ -61,8 +61,7 @@ export default class MainScreen extends Phaser.Scene {
                     sceneToOpen = CST.SCENES.LEVEL_FIVE;
                     break;
             }
-            //TODO this.scene.start(sceneToOpen);
-            this.scene.start(CST.SCENES.LEVEL_ONE);
+            this.scene.start(sceneToOpen);
         });
     }
 }

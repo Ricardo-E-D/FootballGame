@@ -45,160 +45,144 @@ export const CONFIG = {
         },
         "fixTheBall":
             {
-                "text" : "Remember to fixate the ball!",
+                "text": "Remember to fixate the ball!",
                 "countdownFirstPart": "Continuing in ",
                 "countdownSecondPart": " seconds"
             },
         "endLevel": {
-            "firstPart" : "Congratulation - you have passed level ",
+            "firstPart": "Congratulation - you have passed level ",
             "secondPart": ",\n next level starts in ",
-            "thirdPard": " seconds"
+            "thirdPart": " seconds"
         }
     },
-    "difficulty": {
+    "difficulty": [{
         //A
-        "0": {
-            "topSpanY": 0.5,
-            "bottomSpanY": 0.51,
+        "topSpanY": 0.5,
+        "bottomSpanY": 0.51,
 
-            "leftSpanXMin": 0.24,
-            "leftSpanXMax": 0.25,
+        "leftSpanXMin": 0.24,
+        "leftSpanXMax": 0.25,
 
-            "rightSpanXMin": 0.74,
-            "rightSpanXMax": 0.75,
+        "rightSpanXMin": 0.74,
+        "rightSpanXMax": 0.75,
 
-            "dotSize": 10,
+        "dotSize": 10,
 
-            "lowerIntervalLimit": 599,
-            "upperIntervalLimit": 1200,
+        "lowerIntervalLimit": 599,
+        "upperIntervalLimit": 1200,
 
-            "numberOfSymbols": 1
-        },
-
+        "numberOfSymbols": 1
+    }, {
         //B
-        "1": {
-            "topSpanY": 0.45,
-            "bottomSpanY": 0.55,
+        "topSpanY": 0.45,
+        "bottomSpanY": 0.55,
 
-            "leftSpanXMin": 0.24,
-            "leftSpanXMax": 0.25,
+        "leftSpanXMin": 0.24,
+        "leftSpanXMax": 0.25,
 
-            "rightSpanXMin": 0.74,
-            "rightSpanXMax": 0.75,
+        "rightSpanXMin": 0.74,
+        "rightSpanXMax": 0.75,
 
-            "dotSize": 9,
-            "lowerIntervalLimit": 501,
-            "upperIntervalLimit": 600,
+        "dotSize": 9,
+        "lowerIntervalLimit": 501,
+        "upperIntervalLimit": 600,
 
-            "numberOfSymbols": 1
-        },
-
+        "numberOfSymbols": 1
+    }, {
         //C
-        "2": {
-            "topSpanY": 0.45,
-            "bottomSpanY": 0.55,
+        "topSpanY": 0.45,
+        "bottomSpanY": 0.55,
 
-            "leftSpanXMin": 0.20,
-            "leftSpanXMax": 0.30,
+        "leftSpanXMin": 0.20,
+        "leftSpanXMax": 0.30,
 
-            "rightSpanXMin": 0.70,
-            "rightSpanXMax": 0.80,
+        "rightSpanXMin": 0.70,
+        "rightSpanXMax": 0.80,
 
-            "dotSize": 8,
-            "lowerIntervalLimit": 429,
-            "upperIntervalLimit": 500,
+        "dotSize": 8,
+        "lowerIntervalLimit": 429,
+        "upperIntervalLimit": 500,
 
-            "numberOfSymbols": 2
-        },
-
+        "numberOfSymbols": 2
+    }, {
         //D
-        "3": {
-            "topSpanY": 0.40,
-            "bottomSpanY": 0.60,
+        "topSpanY": 0.40,
+        "bottomSpanY": 0.60,
 
-            "leftSpanXMin": 0.20,
-            "leftSpanXMax": 0.30,
+        "leftSpanXMin": 0.20,
+        "leftSpanXMax": 0.30,
 
-            "rightSpanXMin": 0.70,
-            "rightSpanXMax": 0.80,
+        "rightSpanXMin": 0.70,
+        "rightSpanXMax": 0.80,
 
-            "dotSize": 7,
-            "lowerIntervalLimit": 376,
-            "upperIntervalLimit": 428,
+        "dotSize": 7,
+        "lowerIntervalLimit": 376,
+        "upperIntervalLimit": 428,
 
-            "numberOfSymbols": 2
-        },
-
+        "numberOfSymbols": 2
+    }, {
         //E
-        "4": {
-            "topSpanY": 0.40,
-            "bottomSpanY": 0.60,
+        "topSpanY": 0.40,
+        "bottomSpanY": 0.60,
 
-            "leftSpanXMin": 0.15,
-            "leftSpanXMax": 0.35,
+        "leftSpanXMin": 0.15,
+        "leftSpanXMax": 0.35,
 
-            "rightSpanXMin": 0.65,
-            "rightSpanXMax": 0.85,
+        "rightSpanXMin": 0.65,
+        "rightSpanXMax": 0.85,
 
-            "dotSize": 6,
-            "lowerIntervalLimit": 334,
-            "upperIntervalLimit": 375,
+        "dotSize": 6,
+        "lowerIntervalLimit": 334,
+        "upperIntervalLimit": 375,
 
-            "numberOfSymbols": 3
-        },
-
+        "numberOfSymbols": 3
+    }, {
         //F
-        "5": {
-            "topSpanY": 0.35,
-            "bottomSpanY": 0.65,
+        "topSpanY": 0.35,
+        "bottomSpanY": 0.65,
 
-            "leftSpanXMin": 0.15,
-            "leftSpanXMax": 0.35,
+        "leftSpanXMin": 0.15,
+        "leftSpanXMax": 0.35,
 
-            "rightSpanXMin": 0.65,
-            "rightSpanXMax": 0.85,
+        "rightSpanXMin": 0.65,
+        "rightSpanXMax": 0.85,
 
-            "dotSize": 5,
-            "lowerIntervalLimit": 301,
-            "upperIntervalLimit": 333,
+        "dotSize": 5,
+        "lowerIntervalLimit": 301,
+        "upperIntervalLimit": 333,
 
-            "numberOfSymbols": 3
-        },
-
+        "numberOfSymbols": 3
+    }, {
         //G
-        "6": {
-            "topSpanY": 0.35,
-            "bottomSpanY": 0.65,
+        "topSpanY": 0.35,
+        "bottomSpanY": 0.65,
 
-            "leftSpanXMin": 0.10,
-            "leftSpanXMax": 0.40,
+        "leftSpanXMin": 0.10,
+        "leftSpanXMax": 0.40,
 
-            "rightSpanXMin": 0.60,
-            "rightSpanXMax": 0.90,
+        "rightSpanXMin": 0.60,
+        "rightSpanXMax": 0.90,
 
-            "dotSize": 5,
-            "lowerIntervalLimit": 273,
-            "upperIntervalLimit": 300,
+        "dotSize": 5,
+        "lowerIntervalLimit": 273,
+        "upperIntervalLimit": 300,
 
-            "numberOfSymbols": 4
-        },
-
+        "numberOfSymbols": 4
+    }, {
         //H
-        "7": {
-            "topSpanY": 0.30,
-            "bottomSpanY": 0.70,
+        "topSpanY": 0.30,
+        "bottomSpanY": 0.70,
 
-            "leftSpanXMin": 0.10,
-            "leftSpanXMax": 0.40,
+        "leftSpanXMin": 0.10,
+        "leftSpanXMax": 0.40,
 
-            "rightSpanXMin": 0.60,
-            "rightSpanXMax": 0.90,
+        "rightSpanXMin": 0.60,
+        "rightSpanXMax": 0.90,
 
-            "dotSize": 5,
-            "lowerIntervalLimit": 0,
-            "upperIntervalLimit": 372,
+        "dotSize": 5,
+        "lowerIntervalLimit": 0,
+        "upperIntervalLimit": 372,
 
-            "numberOfSymbols": 4
-        }
-    }
+        "numberOfSymbols": 4
+    }]
 }

@@ -79,17 +79,24 @@ export default class SymbolLevel extends Phaser.Scene {
     checkForValidAnswer(selectedIndex) {
         let correctAnswer = this.buttonManager.getCorrectOptionIndex();
         if (selectedIndex === correctAnswer) {
-            this.scoreBoard.increaseScore();
-            this.levelPassedManager.addEntry(true);
+            this.correctAnswer();
         } else {
-            this.scoreBoard.decreaseScore();
-            this.levelPassedManager.addEntry(false);
+            this.incorrectAnswer();
         }
         this.intervalManager.setBallIntervalTime(this.difficultyManager.getCurrentDifficulty().lowerIntervalLimit);
         this.buttonManager.destroyOptionButtons();
-        this.difficultyManager.increaseDifficulty();
-
         this.continueGame();
+    }
+
+    correctAnswer() {
+        this.scoreBoard.increaseScore();
+        this.levelPassedManager.addEntry(true);
+        this.difficultyManager.increaseDifficulty();
+    }
+
+    incorrectAnswer() {
+        this.scoreBoard.decreaseScore();
+        this.levelPassedManager.addEntry(false);
     }
 
     continueGame() {

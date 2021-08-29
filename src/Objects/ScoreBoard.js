@@ -46,6 +46,7 @@ export default class ScoreBoard {
     }
 
     reset() {
+        streak = 0;
         score = 0;
     }
 }

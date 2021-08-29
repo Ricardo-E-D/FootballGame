@@ -23,17 +23,6 @@ export default class Level1 extends Phaser.Scene {
         eye = CST.EYE.RIGHT
     }
 
-    createObjects() {
-        this.dot = new Dot(this);
-        this.scoreBoard = new ScoreBoard(this);
-        this.difficultyManager = new DifficultyManager(this);
-        this.ball = new Ball(this);
-        this.timer = new Timer(this, eye);
-        this.intervalManager = new IntervalManager(() => this.createBall(), () => this.dot.toGenerateRedDot(true), () => this.incorrectSpacePressed());
-        this.levelPassedManager = new LevelPassedManager();
-    }
-
-
     create() {
         BackgroundImage(this);
         this.intervalManager.createBallInterval();
@@ -51,13 +40,23 @@ export default class Level1 extends Phaser.Scene {
         document.getElementById("slowDownButton").onclick = this.slowDownButtonPressed.bind(this);
     }
 
+
+    update() {
+    }
+
+    createObjects() {
+        this.dot = new Dot(this);
+        this.scoreBoard = new ScoreBoard(this);
+        this.difficultyManager = new DifficultyManager(this);
+        this.ball = new Ball(this);
+        this.timer = new Timer(this, eye);
+        this.intervalManager = new IntervalManager(() => this.createBall(), () => this.dot.toGenerateRedDot(true), () => this.incorrectSpacePressed());
+        this.levelPassedManager = new LevelPassedManager();
+    }
+
     addKeyboardButtonListener() {
         keyboardListener = this.spacePressed.bind(this);
         document.getElementById("spaceButton").addEventListener("click", keyboardListener);
-    }
-
-    update() {
-        this.scoreBoard.update()
     }
 
     createSpaceOnKeyboardListener() {
@@ -126,24 +125,24 @@ export default class Level1 extends Phaser.Scene {
         } else {
             this.dot.deleteRedDotIfExists();
         }
-        console.log("Ball speed: + " + this.intervalManager.getBallIntervalTime())
     }
 
 
     timeOver() {
+        this.pauseGame();
+
         if (eye === CST.EYE.LEFT) {
             if (this.levelPassedManager.isLevelPassed()) {
-                this.pauseGame();
+                this.saveDataToAPI();
                 EndLevelMessage(this, 1, () => this.levelUp());
                 eye = CST.EYE.RIGHT;
             } else {
                 eye = CST.EYE.RIGHT;
-                this.pauseGame();
                 Message(this, () => this.restartLevel(), CONFIG.messages.levelNotPassed)
             }
         } else {
+            this.saveDataToAPI();
             eye = CST.EYE.LEFT;
-            this.pauseGame();
             Message(this,  () => this.restartLevel(),CONFIG.messages.changeEye);
             }
         this.reset();
@@ -154,7 +153,6 @@ export default class Level1 extends Phaser.Scene {
         this.registry.destroy();
         this.events.off();
         this.input.keyboard.off('keydown-SPACE');
-        this.scoreBoard.reset();
         this.timer.reset();
         this.intervalManager.resetBallIntervalSpeed();
         this.difficultyManager.reset();
@@ -165,6 +163,7 @@ export default class Level1 extends Phaser.Scene {
     }
 
     levelUp() {
+        this.saveDataToAPI();
         document.getElementById("spaceButton").style.visibility = "hidden";
         this.reset();
         this.scene.start(CST.SCENES.LEVEL_TWO);
@@ -173,5 +172,10 @@ export default class Level1 extends Phaser.Scene {
     restartLevel() {
         this.reset();
         this.create();
+    }
+
+    saveDataToAPI()
+    {
+        console.log("Level: " + 1 + ", Score: " + this.scoreBoard.getScore() + ", Eye: " + eye.toString())
     }
 }
